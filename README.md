@@ -1,5 +1,6 @@
 # CLI-powermenu
-Just a plain and simple terminal powermenu for Linux, inspired by `ncmpcpp` command window.
+Just a plain and simple terminal powermenu for Linux, written in Python with `ncurses` library, inspired by `ncmpcpp` command window.
+![[power.png]]
 
 ## Instruction 
 1. Create the directory `~/.local/bin` directory`
