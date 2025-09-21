@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+import curses
+import os
+import subprocess
+import sys
+
+def draw_menu(stdscr):
+    curses.curs_set(0)
+    stdscr.keypad(True)
+    
+    # Use default terminal colors
+    curses.use_default_colors()
+    
+    options = [
+        "Lock screen",
+        "Switch user",
+        "Suspend",
+        "Restart",
+        "Shutdown",
+        "Logout",
+        "Cancel"
+    ]
+    
+    current_row = 0
+    
+    while True:
+        stdscr.clear()
+        height, width = stdscr.getmaxyx()
+        
+        # Draw header
+        header = "SESSION MANAGER v1.0"
+        stdscr.addstr(1, (width - len(header)) // 2, header, curses.A_BOLD)
+        stdscr.hline(2, 0, curses.ACS_HLINE, width)
+        
+        # Draw options
+        for idx, option in enumerate(options):
+            x = width // 2 - 10
+            y = 4 + idx
+            
+            if idx == current_row:
+                stdscr.addstr(y, x, f"> {option}", curses.A_REVERSE)
+            else:
+                stdscr.addstr(y, x, f"  {option}")
+        
+        # Draw footer
+        stdscr.hline(height - 2, 0, curses.ACS_HLINE, width)
+        stdscr.addstr(height - 1, 2, "Navigate: ↑↓  Select: Enter")
+        
+        stdscr.refresh()
+        
+        key = stdscr.getch()
+        
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+        elif key == curses.KEY_DOWN and current_row < len(options) - 1:
+            current_row += 1
+        elif key == curses.KEY_ENTER or key in [10, 13]:
+            if current_row == 0:  # Lock screen
+                subprocess.run(["xflock4"], check=False)
+                sys.exit(0)
+            elif current_row == 1:  # Switch user
+                subprocess.run(["dm-tool", "switch-to-greeter"], check=False)
+                sys.exit(0)
+            elif current_row == 2:  # Suspend
+                subprocess.run(["systemctl", "suspend"], check=False)
+                sys.exit(0)
+            elif current_row == 3:  # Restart
+                subprocess.run(["xfce4-session-logout", "--reboot"], check=False)
+                sys.exit(0)
+            elif current_row == 4:  # Shutdown
+                subprocess.run(["xfce4-session-logout", "--halt"], check=False)
+                sys.exit(0)
+            elif current_row == 5:  # Logout
+                subprocess.run(["xfce4-session-logout", "--logout"], check=False)
+                sys.exit(0)
+            elif current_row == 6:  # Cancel
+                break
+        
+        elif key == ord('q'):
+            break
+
+def main():
+    curses.wrapper(draw_menu)
+
+if __name__ == "__main__":
+    main()
