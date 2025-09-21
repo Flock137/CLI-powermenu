@@ -4,7 +4,7 @@ Just a plain and simple terminal powermenu for Linux, written in Python with `nc
 ![](https://github.com/Flock137/CLI-powermenu/blob/main/power.png)
 
 ## Instruction 
-1. Create the directory `~/.local/bin` directory`
+1. Create the directory `~/.local/bin`:
 ```
 cd .local
 mkdir bin
@@ -13,7 +13,7 @@ mkdir bin
 2. Copy the (raw text of) `powermenu` script in this repository, then:
 ```
 vim ~/.local/bin/powermenu
-# You can use other text editor that you prefer
+# You may use other text editor that you prefer
 ```
 Paste the script in that file
 
