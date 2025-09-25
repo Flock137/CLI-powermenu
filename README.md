@@ -3,6 +3,11 @@ Just a plain and simple terminal powermenu for Linux, written in Python with `nc
 
 ![](https://github.com/Flock137/CLI-powermenu/blob/main/power.png)
 
+## Note
+For now, this script only work with **xfce4** Dekstop Environment (DE). 
+
+But it should be easy enough to adjust the script a bit to make it works on your desired environment.
+
 ## Instruction 
 1. Create the directory `~/.local/bin`:
 ```
